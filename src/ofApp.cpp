@@ -112,6 +112,7 @@ void ofApp::update() {
         dilate(grayImage);
         dilate(grayImage);
         blur(grayImage, 5);
+
         
         // Mark image as changed
         grayImage.update();
