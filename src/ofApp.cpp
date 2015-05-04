@@ -34,11 +34,11 @@ void ofApp::setup() {
 	}
 	
     // Thresholds
-    nearThreshold = 255; //230;
-	farThreshold = 220; //70;
+    nearThreshold = 188; //230;
+	farThreshold = 102; //70;
     
 	// Zero the tilt on startup
-	angle = 0;
+	angle = 14;
 	kinect.setCameraTiltAngle(angle);
     
     // Allocate images
@@ -47,6 +47,7 @@ void ofApp::setup() {
     grayThreshNear.allocate(kinect.width, kinect.height, OF_IMAGE_GRAYSCALE);
 	grayThreshFar.allocate(kinect.width, kinect.height, OF_IMAGE_GRAYSCALE);
     grayPreprocImage.allocate(kinect.width, kinect.height, OF_IMAGE_GRAYSCALE);
+    grayImageScaled.allocate(1920, 1080, OF_IMAGE_GRAYSCALE);
     
     // Configure contour finder
 	contourFinder.setMinAreaRadius(10);
@@ -84,7 +85,12 @@ void ofApp::update() {
 	if (kinect.isFrameNew()) {
         
         // Load grayscale depth image from the kinect source
+        
 		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height, OF_IMAGE_GRAYSCALE);
+        // THIS IS DIRTY
+        // WE NEED TO DI THIS THE RIGHT WAY
+        // @Todo
+//        grayImage.resize(1920, 1080);
         
         // Threshold image
         threshold(grayImage, grayThreshNear, nearThreshold, true);
@@ -100,18 +106,23 @@ void ofApp::update() {
         
         // Save pre-processed image for drawing it
         grayPreprocImage = grayImage;
-        
 		// Process image
+
+        grayImage.mirror(false, true);
         dilate(grayImage);
         dilate(grayImage);
         blur(grayImage, 5);
+
         
         // Mark image as changed
         grayImage.update();
         
         // Find contours
         //contourFinder.setThreshold(ofMap(mouseX, 0, ofGetWidth(), 0, 255));
+//        grayImageScaled = grayImage;
+//        grayImageScaled.resize(1920, 1080);
         contourFinder.findContours(grayImage);
+        
         
         // Update biggest contour -------------------------------------------------------------
         
@@ -123,13 +134,22 @@ void ofApp::update() {
                 edgeLine.destroy();
             }
             
+//            ofPushMatrix();
             ofPolyline biggestPolyline = contourFinder.getPolyline(0); // The biggest one
             
             // TO DO: Scale here to fit screen!
-            //ofScale(0.625, 0.625, 1); // 640x480 -> 400x300 = 0.625
+//           ofScale(ofGetWidth()/ 640, ofGetHeight()/480, 1); // 640x480 -> 400x300 = 0.625
+            
+
+                for(int i=0;i< (int)biggestPolyline.size();i++){
+                    biggestPolyline[i].x*= (ofGetWidth()/ 640);
+                    biggestPolyline[i].y*= (ofGetHeight()/360);
+//                    drawing.addVertex(biggestPolyline[i]);
+                }
+
             
             drawing.addVertices(biggestPolyline.getVertices());
-            
+//            ofPopMatrix();
             drawing.setClosed(false);
             drawing.simplify();
             
