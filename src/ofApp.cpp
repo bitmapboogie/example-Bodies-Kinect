@@ -105,6 +105,7 @@ void ofApp::update() {
         dilate(grayImage);
         dilate(grayImage);
         blur(grayImage, 5);
+
         
         // Mark image as changed
         grayImage.update();
@@ -158,7 +159,7 @@ void ofApp::update() {
 		for(int i=0; i<customParticles.size(); i++) {
 			customParticles[i].get()->addAttractionPoint(mouseX, mouseY, strength);
 			customParticles[i].get()->setDamping(damping, damping);
-		}
+		}ofPath
 		
 	}
 	
