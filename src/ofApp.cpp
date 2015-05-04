@@ -12,7 +12,7 @@ void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     
 	ofSetVerticalSync(true);
-	ofBackgroundHex(0xfdefc2);
+	ofBackground(style.getBackgroundColor());
     
     
     // Kinect setup
@@ -60,16 +60,16 @@ void ofApp::setup() {
 	
 	box2d.init();
 	box2d.setGravity(0, 10);
-	box2d.createGround();
+//	box2d.createGround();
 	box2d.setFPS(30.0);
 	box2d.registerGrabbing();
 	
 	// lets add a contour to start
-	for (int i=0; i<nPts; i+=2) {
-		float x = pts[i];
-		float y = pts[i+1];
-		edgeLine.addVertex(x, y);
-	}
+//	for (int i=0; i<nPts; i+=2) {
+//		float x = pts[i];
+//		float y = pts[i+1];
+//		edgeLine.addVertex(x, y);
+//	}
 	
 	// make the shape
 	edgeLine.setPhysics(0.0, 0.5, 0.5);
@@ -196,14 +196,36 @@ void ofApp::draw() {
 	
 	for(int i=0; i<circles.size(); i++) {
 		ofFill();
-		ofSetHexColor(0x90d4e3);
-		circles[i].get()->draw();
+        ofSetColor(style.getForgroundColor());
+//		ofSetHexColor(0x90d4e3);
+        ofxBox2dCircle *circ = circles[i].get();
+
+        
+        if(!circ->isBody()) return;
+        
+        ofPushMatrix();
+        ofTranslate(circ->getPosition().x,circ->getPosition().y, 0);
+        ofRotate(circ->getRotation(), 0, 0, 1);
+        ofCircle(0, 0, circ->getRadius());
+        
+//        ofPushStyle();
+//        ofEnableAlphaBlending();
+//        ofSetColor(0);
+//        ofLine(0, 0, radius, 0);
+//        if(circ->isSleeping()) {
+//            ofSetColor(255, 100);
+//            ofCircle(0, 0, radius);
+//        }
+//        ofPopStyle();
+        ofPopMatrix();
 	}
 	
 	for(int i=0; i<boxes.size(); i++) {
 		ofFill();
-		ofSetHexColor(0xe63b8b);
+        ofSetColor(style.getForgroundColor()) ;
+//		ofSetHexColor(0xe63b8b);
 		boxes[i].get()->draw();
+        
 	}
 	
 	for(int i=0; i<customParticles.size(); i++) {
@@ -211,7 +233,7 @@ void ofApp::draw() {
 	}
 	
 	ofNoFill();
-	ofSetHexColor(0x444342);
+	ofSetColor(style.getForgroundColor());
 	if(drawing.size()==0) {
         edgeLine.updateShape();
         edgeLine.draw();

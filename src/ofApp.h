@@ -3,7 +3,7 @@
 #include "ofxKinect.h"
 #include "ofxCv.h"
 #include "ofxBox2d.h"
-
+#include "Styling.h"
 // ------------------------------------------------- a simple extended box2d circle
 class CustomParticle : public ofxBox2dCircle {
 	
@@ -56,6 +56,8 @@ public:
     ofImage grayPreprocImage;  // grayscale pre-processed image
     // @ToDo : Scale polyline not image
     ofImage grayImageScaled; // for getting the ize of our screen
+    
+    Styling style;
 	
     int nearThreshold;
 	int farThreshold;
