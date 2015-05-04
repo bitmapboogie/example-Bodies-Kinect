@@ -60,9 +60,8 @@ void ofApp::setup() {
 	bMouseForce = false;
 	
 	box2d.init();
-	box2d.setGravity(0, 10);
-    //	box2d.createGround();
-	box2d.setFPS(30.0);
+	box2d.setGravity(0, 1);
+	box2d.setFPS(60.0);
 	box2d.registerGrabbing();
 	
 	// lets add a contour to start
@@ -71,25 +70,6 @@ void ofApp::setup() {
     //		float y = pts[i+1];
     //		edgeLine.addVertex(x, y);
     //	}
-	
-    // Add first particles
-    for (int i = 0; i < numberOfParticles;i++){
-        float r = ofRandom(4, 20);		// a random radius 4px - 20px
-        
-        // now add a circle to the vector
-        ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
-        
-        //        b2FixtureDef circleFixture = circle.get()->fixture;
-        //        circleFixture.filter.groupIndex = -8;
-        //        circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
-        //        circleFixture.filter.maskBits = CATEGORY_TRACKING;
-        
-        //circles.push_back(ofPtr<ofxBox2dCircle>(new ofxBox2dCircle));
-        circle.get()->setPhysics(3.0, 0.53, 0.1);
-        circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), ofRandom(r, 50), r);
-        
-        circles.push_back(circle);
-    }
     
     // World Collision Filtering
     b2World *world = box2d.getWorld();
@@ -102,7 +82,7 @@ void ofApp::setup() {
     //    edgeFixture.filter.categoryBits = CATEGORY_TRACKING;
     //    edgeFixture.filter.maskBits = CATEGORY_PARTICLES;
     
-    edgeLine.setPhysics(0.0, 0.5, 0.5);
+    edgeLine.setPhysics(1.0, 0.5, 0.5);
 	edgeLine.create(box2d.getWorld());
 }
 
@@ -113,7 +93,7 @@ void ofApp::update() {
         int diff = numberOfParticles - circles.size();
         int num = (int) ofRandom(10);
         for (int i = 0; i < num;i++){
-            float r = ofRandom(4, 20);		// a random radius 4px - 20px
+            float r = ofRandom(2, 6);		// a random radius 4px - 20px
             
             // now add a circle to the vector
             ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
@@ -123,7 +103,7 @@ void ofApp::update() {
             //            circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
             //            circleFixture.filter.maskBits = CATEGORY_TRACKING;
             
-            circle.get()->setPhysics(3.0, 0.53, 0.1);
+            circle.get()->setPhysics(3.0, 0.1/*0.53*/, 0.3);
             circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), -ofRandom(r, 50), r);
             
             circles.push_back(circle);
@@ -294,6 +274,7 @@ void ofApp::draw() {
 	ofSetColor(style.getForgroundColor());
 	if(drawing.size()==0) {
         edgeLine.updateShape();
+        //edgeLine.update();
         edgeLine.draw();
     }
 	else drawing.draw();
