@@ -354,7 +354,7 @@
 		AB626D8A1AF3D85700A53F0E /* ofxBox2dRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRect.h; sourceTree = "<group>"; };
 		AB626D8B1AF3D85700A53F0E /* ofxBox2dRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRender.h; sourceTree = "<group>"; };
 		AB626D8C1AF3D85700A53F0E /* ofxBox2dUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dUtils.h; sourceTree = "<group>"; };
-		AB85FB8B1AF7997B006D2E17 /* CustomContactListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomContactListener.h; sourceTree = "<group>"; };
+		AB85FB8B1AF7997B006D2E17 /* CustomContactFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomContactFilter.h; sourceTree = "<group>"; };
 		AE433383D6CA170C418C8A9E /* highgui_c.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = highgui_c.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/highgui/highgui_c.h; sourceTree = SOURCE_ROOT; };
 		AE75A3FBA2C2D87D14F06FE6 /* ObjectFinder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ObjectFinder.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/ObjectFinder.cpp; sourceTree = SOURCE_ROOT; };
 		AF9A155219FEDFA6E95454EA /* gpu.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = gpu.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/gpu/gpu.hpp; sourceTree = SOURCE_ROOT; };
@@ -1177,7 +1177,7 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				AB85FB8B1AF7997B006D2E17 /* CustomContactListener.h */,
+				AB85FB8B1AF7997B006D2E17 /* CustomContactFilter.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

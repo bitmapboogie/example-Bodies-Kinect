@@ -14,7 +14,10 @@
 class CustomContactFilter : public b2ContactFilter {
 public:
     bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) {
-        return false;
+        
+        // @TODO: Filter from collision particles inside contours
+        
+        return !(fixtureA->GetType() == b2Shape::e_circle && fixtureB->GetType() == b2Shape::e_circle);
     }
 };
 

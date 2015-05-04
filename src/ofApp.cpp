@@ -12,6 +12,7 @@ void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     
 	ofSetVerticalSync(true);
+    //ofHideCursor();
 	ofBackground(style.getBackgroundColor());
     
     
@@ -127,8 +128,6 @@ void ofApp::update() {
             
             circles.push_back(circle);
         }
-        
-        
     }
     
     kinect.update();
@@ -178,33 +177,41 @@ void ofApp::update() {
         
         // Update biggest contour -------------------------------------------------------------
         
+        if (edgeLine.isBody()) {
+            drawing.clear();
+            edgeLine.destroy();
+        }
+        
         int n = contourFinder.size();
         if (n > 0) {
             
-            if (edgeLine.isBody()) {
-                drawing.clear();
-                edgeLine.destroy();
-            }
-            
-            //            ofPushMatrix();
             ofPolyline biggestPolyline = contourFinder.getPolyline(0); // The biggest one
             
-            // TO DO: Scale here to fit screen!
-            //           ofScale(ofGetWidth()/ 640, ofGetHeight()/480, 1); // 640x480 -> 400x300 = 0.625
-            
-            
+            // Scale polyline and add vertices
             for(int i=0;i< (int)biggestPolyline.size();i++){
                 biggestPolyline[i].x*= (ofGetWidth()/ 640);
                 biggestPolyline[i].y*= (ofGetHeight()/360);
-                //                    drawing.addVertex(biggestPolyline[i]);
+                drawing.addVertex(biggestPolyline[i]);
+            }
+            //drawing.addVertices(biggestPolyline.getVertices());
+            
+            // Close shape
+            drawing.close();
+            
+            // Smooth shape
+            drawing = drawing.getSmoothed(8);
+            //int smoothSize = ofMap(mouseX, 0, ofGetWidth(), 0, 32, true);
+            //drawing = drawing.getSmoothed(smoothSize, 0.0f);
+            
+            // Simplify shape (remove some points)
+            drawing.simplify(2.0f);
+            float simplifyAmount = 2.5f;
+            while (drawing.size() > 100){
+                drawing.simplify(simplifyAmount);
+                simplifyAmount += .5f;
             }
             
-            
-            drawing.addVertices(biggestPolyline.getVertices());
-            //            ofPopMatrix();
-            drawing.setClosed(false);
-            drawing.simplify();
-            
+            // Add vertices to box2d edge
             edgeLine.addVertexes(drawing);
             //polyLine.simplifyToMaxVerts(); // this is based on the max box2d verts
             edgeLine.setPhysics(0.0, 0.5, 0.5);
@@ -218,7 +225,7 @@ void ofApp::update() {
     
 	box2d.update();
 	
-	if(bMouseForce) {
+	if (bMouseForce) {
         
 		float strength = 8.0f;
 		float damping  = 0.7f;
@@ -231,14 +238,11 @@ void ofApp::update() {
 			customParticles[i].get()->addAttractionPoint(mouseX, mouseY, strength);
 			customParticles[i].get()->setDamping(damping, damping);
 		}
-		
 	}
 	
     // remove shapes offscreen
     ofRemove(boxes, ofxBox2dBaseShape::shouldRemoveOffScreen);
-    
     ofRemove(circles, ofApp::shouldRemoveOffScreen);
-    
     ofRemove(customParticles, ofxBox2dBaseShape::shouldRemoveOffScreen);
 }
 

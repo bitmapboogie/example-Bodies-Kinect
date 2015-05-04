@@ -3,7 +3,7 @@
 #include "ofxKinect.h"
 #include "ofxCv.h"
 #include "ofxBox2d.h"
-#include "CustomContactListener.h"
+#include "CustomContactFilter.h"
 #include "Styling.h"
 
 #define CATEGORY_TRACKING   0xFFFF;
@@ -78,6 +78,8 @@ public:
 	bool                                    bDrawLines;
 	bool                                    bMouseForce;
 	
+    // @TODO: work with more than one contour
+    
 	ofxBox2d                                box2d;			  //	the box2d world
 	ofPolyline                              drawing;		  //	we draw with this first
 	ofxBox2dEdge                            edgeLine;		  //	the box2d edge/line shape (min 2 points)
