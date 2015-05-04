@@ -5,70 +5,42 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-<<<<<<< HEAD
-	<string>45552ECE-13E4-4E4D-BD84-26287C16F6C5</string>
-=======
-	<string>33C5E5F8-70AE-42FC-8195-5F9404671E06</string>
->>>>>>> d6808406f2b0cc33a66fefb21d003a87ccb0f477
+	<string>E57D3072-18ED-4C0B-828F-33FE3719CBF0</string>
 	<key>IDESourceControlProjectName</key>
 	<string>example-Bodies-Kinect</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-<<<<<<< HEAD
-		<key>1A44994B-98D8-4879-BAFB-2B3386B37D63</key>
+		<key>52F2F6D8-E644-4AF3-8B10-48ABA686E404</key>
 		<string>ssh://github.com/bitmapboogie/ofxBox2d.git</string>
-		<key>4F4B033D-7339-491E-9509-15782777D118</key>
+		<key>825CBBFD-4CFB-4793-9E34-69EE5E0153E0</key>
+		<string>ssh://github.com/kylemcdonald/ofxCv.git</string>
+		<key>B18C6E1B-228F-48AF-A74C-7BC78BA65AA7</key>
 		<string>ssh://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
-		<key>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</key>
-=======
-		<key>91A8D1C6-3760-4255-A498-8B4F5AF38BC2</key>
-		<string>https://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
-		<key>FC448499-CD6E-4801-99F0-1E541505D32C</key>
->>>>>>> d6808406f2b0cc33a66fefb21d003a87ccb0f477
-		<string>https://github.com/kylemcdonald/ofxCv.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>example-Bodies-Kinect.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-<<<<<<< HEAD
-		<key>1A44994B-98D8-4879-BAFB-2B3386B37D63</key>
+		<key>52F2F6D8-E644-4AF3-8B10-48ABA686E404</key>
 		<string>../../../../../addons/ofxBox2d</string>
-		<key>4F4B033D-7339-491E-9509-15782777D118</key>
-		<string>../..</string>
-		<key>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</key>
+		<key>825CBBFD-4CFB-4793-9E34-69EE5E0153E0</key>
 		<string>../../../../../addons/ofxCv</string>
+		<key>B18C6E1B-228F-48AF-A74C-7BC78BA65AA7</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>4F4B033D-7339-491E-9509-15782777D118</string>
-=======
-		<key>91A8D1C6-3760-4255-A498-8B4F5AF38BC2</key>
-		<string>../..</string>
-		<key>FC448499-CD6E-4801-99F0-1E541505D32C</key>
-		<string>../../../../../addons/ofxCv</string>
-	</dict>
-	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
-	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
-	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>91A8D1C6-3760-4255-A498-8B4F5AF38BC2</string>
->>>>>>> d6808406f2b0cc33a66fefb21d003a87ccb0f477
+	<string>B18C6E1B-228F-48AF-A74C-7BC78BA65AA7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-<<<<<<< HEAD
-			<string>4F4B033D-7339-491E-9509-15782777D118</string>
-=======
-			<string>91A8D1C6-3760-4255-A498-8B4F5AF38BC2</string>
->>>>>>> d6808406f2b0cc33a66fefb21d003a87ccb0f477
+			<string>B18C6E1B-228F-48AF-A74C-7BC78BA65AA7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>example-Bodies-Kinect</string>
 		</dict>
@@ -76,8 +48,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-<<<<<<< HEAD
-			<string>1A44994B-98D8-4879-BAFB-2B3386B37D63</string>
+			<string>52F2F6D8-E644-4AF3-8B10-48ABA686E404</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxBox2d</string>
 		</dict>
@@ -85,10 +56,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</string>
-=======
-			<string>FC448499-CD6E-4801-99F0-1E541505D32C</string>
->>>>>>> d6808406f2b0cc33a66fefb21d003a87ccb0f477
+			<string>825CBBFD-4CFB-4793-9E34-69EE5E0153E0</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxCv</string>
 		</dict>

@@ -12,7 +12,7 @@ void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     
 	ofSetVerticalSync(true);
-	ofBackgroundHex(0xfdefc2);
+	ofBackground(style.getBackgroundColor());
     
     
     // Kinect setup
@@ -60,25 +60,79 @@ void ofApp::setup() {
 	
 	box2d.init();
 	box2d.setGravity(0, 10);
-	box2d.createGround();
+//	box2d.createGround();
 	box2d.setFPS(30.0);
 	box2d.registerGrabbing();
 	
 	// lets add a contour to start
-	for (int i=0; i<nPts; i+=2) {
-		float x = pts[i];
-		float y = pts[i+1];
-		edgeLine.addVertex(x, y);
-	}
+//	for (int i=0; i<nPts; i+=2) {
+//		float x = pts[i];
+//		float y = pts[i+1];
+//		edgeLine.addVertex(x, y);
+//	}
 	
+    // Add first particles
+    for (int i = 0; i < numberOfParticles;i++){
+        float r = ofRandom(4, 20);		// a random radius 4px - 20px
+    
+        // now add a circle to the vector
+        ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
+        
+        b2FixtureDef circleFixture = circle.get()->fixture;
+        
+        circleFixture.filter.groupIndex = -8;
+        circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
+        circleFixture.filter.maskBits = CATEGORY_TRACKING;
+    
+        //circles.push_back(ofPtr<ofxBox2dCircle>(new ofxBox2dCircle));
+        circle.get()->setPhysics(3.0, 0.53, 0.1);
+        circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), ofRandom(r, 50), r);
+        
+        circles.push_back(circle);
+    }
+    
 	// make the shape
-	edgeLine.setPhysics(0.0, 0.5, 0.5);
+    
+    /*b2World *world = box2d.getWorld();
+    b2ContactFilter *filter;
+    world->SetContactFilter(filter);*/
+    
+    
+    b2FixtureDef edgeFixture = edgeLine.fixture;
+    edgeFixture.filter.groupIndex = 8;
+    edgeFixture.filter.categoryBits = CATEGORY_TRACKING;
+    edgeFixture.filter.maskBits = CATEGORY_PARTICLES;
+    
+    edgeLine.setPhysics(0.0, 0.5, 0.5);
 	edgeLine.create(box2d.getWorld());
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 	
+    if (circles.size() < numberOfParticles) {
+        int diff = numberOfParticles - circles.size();
+        int num = (int) ofRandom(10);
+        for (int i = 0; i < num;i++){
+            float r = ofRandom(4, 20);		// a random radius 4px - 20px
+            
+            // now add a circle to the vector
+            ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
+            
+            b2FixtureDef circleFixture = circle.get()->fixture;
+            circleFixture.filter.groupIndex = -8;
+            circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
+            circleFixture.filter.maskBits = CATEGORY_TRACKING;
+    
+            circle.get()->setPhysics(3.0, 0.53, 0.1);
+            circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), -ofRandom(r, 50), r);
+            
+            circles.push_back(circle);
+        }
+        
+        
+    }
+    
     kinect.update();
     
 	// There is a new frame and we are connected
@@ -184,7 +238,9 @@ void ofApp::update() {
 	
     // remove shapes offscreen
     ofRemove(boxes, ofxBox2dBaseShape::shouldRemoveOffScreen);
-    ofRemove(circles, ofxBox2dBaseShape::shouldRemoveOffScreen);
+    
+    ofRemove(circles, ofApp::shouldRemoveOffScreen);
+    
     ofRemove(customParticles, ofxBox2dBaseShape::shouldRemoveOffScreen);
 }
 
@@ -196,14 +252,36 @@ void ofApp::draw() {
 	
 	for(int i=0; i<circles.size(); i++) {
 		ofFill();
-		ofSetHexColor(0x90d4e3);
-		circles[i].get()->draw();
+        ofSetColor(style.getForgroundColor());
+//		ofSetHexColor(0x90d4e3);
+        ofxBox2dCircle *circ = circles[i].get();
+
+        
+        if(!circ->isBody()) return;
+        
+        ofPushMatrix();
+        ofTranslate(circ->getPosition().x,circ->getPosition().y, 0);
+        ofRotate(circ->getRotation(), 0, 0, 1);
+        ofCircle(0, 0, circ->getRadius());
+        
+//        ofPushStyle();
+//        ofEnableAlphaBlending();
+//        ofSetColor(0);
+//        ofLine(0, 0, radius, 0);
+//        if(circ->isSleeping()) {
+//            ofSetColor(255, 100);
+//            ofCircle(0, 0, radius);
+//        }
+//        ofPopStyle();
+        ofPopMatrix();
 	}
 	
 	for(int i=0; i<boxes.size(); i++) {
 		ofFill();
-		ofSetHexColor(0xe63b8b);
+        ofSetColor(style.getForgroundColor()) ;
+//		ofSetHexColor(0xe63b8b);
 		boxes[i].get()->draw();
+        
 	}
 	
 	for(int i=0; i<customParticles.size(); i++) {
@@ -211,7 +289,7 @@ void ofApp::draw() {
 	}
 	
 	ofNoFill();
-	ofSetHexColor(0x444342);
+	ofSetColor(style.getForgroundColor());
 	if(drawing.size()==0) {
         edgeLine.updateShape();
         edgeLine.draw();
@@ -228,8 +306,19 @@ void ofApp::draw() {
 	info += "Total Bodies: "+ofToString(box2d.getBodyCount())+"\n";
 	info += "Total Joints: "+ofToString(box2d.getJointCount())+"\n\n";
 	info += "FPS: "+ofToString(ofGetFrameRate())+"\n";
-	ofSetHexColor(0x444342);
+	ofSetColor(250, 250, 250);
 	ofDrawBitmapString(info, 30, 30);
+    
+    // MAKE THE LOGO BIGGER !!!!!!!!!!!
+    
+ ofImage img = style.getLogo();
+ ofSetColor(255,255,255,200);
+ float w = img.getWidth();
+ float h = img.getHeight();
+ img.resize(w/5, h/5);
+ ofEnableAlphaBlending();
+ img.draw(25,ofGetHeight() - (img.getHeight() + 25));
+ ofDisableAlphaBlending();
 }
 
 //--------------------------------------------------------------
@@ -323,4 +412,10 @@ void ofApp::mouseReleased(int x, int y, int button) {
 void ofApp::resized(int w, int h){
 	
 }
+
+bool ofApp::shouldRemoveOffScreen(ofPtr<ofxBox2dBaseShape> shape) {
+    return !ofRectangle(0, -100, ofGetWidth(), ofGetHeight() + 100).inside(shape.get()->getPosition());
+}
+
+
 

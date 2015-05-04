@@ -3,6 +3,10 @@
 #include "ofxKinect.h"
 #include "ofxCv.h"
 #include "ofxBox2d.h"
+#include "Styling.h"
+
+#define CATEGORY_TRACKING   0xFFFF;
+#define CATEGORY_PARTICLES  0x0001;
 
 // ------------------------------------------------- a simple extended box2d circle
 class CustomParticle : public ofxBox2dCircle {
@@ -44,6 +48,7 @@ public:
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
 	void resized(int w, int h);
+    static bool shouldRemoveOffScreen(ofPtr<ofxBox2dBaseShape> shape);
 	
     // Kinect + OpenCV vars
     ofxKinect kinect;
@@ -56,6 +61,12 @@ public:
     ofImage grayPreprocImage;  // grayscale pre-processed image
     // @ToDo : Scale polyline not image
     ofImage grayImageScaled; // for getting the ize of our screen
+    
+    Styling style; // for storing style infos
+    
+    // continous particle rain
+    
+    const int numberOfParticles = 1000; // upper bounds particle
 	
     int nearThreshold;
 	int farThreshold;
