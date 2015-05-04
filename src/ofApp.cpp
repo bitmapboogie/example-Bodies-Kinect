@@ -54,36 +54,35 @@ void ofApp::setup() {
 	contourFinder.setMaxAreaRadius(200);
     contourFinder.setFindHoles(false);
     contourFinder.setSortBySize(true);
-
+    
     // Box2D setup
 	bMouseForce = false;
 	
 	box2d.init();
 	box2d.setGravity(0, 10);
-//	box2d.createGround();
+    //	box2d.createGround();
 	box2d.setFPS(30.0);
 	box2d.registerGrabbing();
 	
 	// lets add a contour to start
-//	for (int i=0; i<nPts; i+=2) {
-//		float x = pts[i];
-//		float y = pts[i+1];
-//		edgeLine.addVertex(x, y);
-//	}
+    //	for (int i=0; i<nPts; i+=2) {
+    //		float x = pts[i];
+    //		float y = pts[i+1];
+    //		edgeLine.addVertex(x, y);
+    //	}
 	
     // Add first particles
     for (int i = 0; i < numberOfParticles;i++){
         float r = ofRandom(4, 20);		// a random radius 4px - 20px
-    
+        
         // now add a circle to the vector
         ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
         
-        b2FixtureDef circleFixture = circle.get()->fixture;
+        //        b2FixtureDef circleFixture = circle.get()->fixture;
+        //        circleFixture.filter.groupIndex = -8;
+        //        circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
+        //        circleFixture.filter.maskBits = CATEGORY_TRACKING;
         
-        circleFixture.filter.groupIndex = -8;
-        circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
-        circleFixture.filter.maskBits = CATEGORY_TRACKING;
-    
         //circles.push_back(ofPtr<ofxBox2dCircle>(new ofxBox2dCircle));
         circle.get()->setPhysics(3.0, 0.53, 0.1);
         circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), ofRandom(r, 50), r);
@@ -91,17 +90,16 @@ void ofApp::setup() {
         circles.push_back(circle);
     }
     
-	// make the shape
+    // World Collision Filtering
+    b2World *world = box2d.getWorld();
+    CustomContactFilter *filter = new CustomContactFilter();
+    world->SetContactFilter(filter);
     
-    /*b2World *world = box2d.getWorld();
-    b2ContactFilter *filter;
-    world->SetContactFilter(filter);*/
-    
-    
-    b2FixtureDef edgeFixture = edgeLine.fixture;
-    edgeFixture.filter.groupIndex = 8;
-    edgeFixture.filter.categoryBits = CATEGORY_TRACKING;
-    edgeFixture.filter.maskBits = CATEGORY_PARTICLES;
+    // make the shape
+    //    b2FixtureDef edgeFixture = edgeLine.fixture;
+    //    edgeFixture.filter.groupIndex = 8;
+    //    edgeFixture.filter.categoryBits = CATEGORY_TRACKING;
+    //    edgeFixture.filter.maskBits = CATEGORY_PARTICLES;
     
     edgeLine.setPhysics(0.0, 0.5, 0.5);
 	edgeLine.create(box2d.getWorld());
@@ -119,11 +117,11 @@ void ofApp::update() {
             // now add a circle to the vector
             ofPtr<ofxBox2dCircle> circle = ofPtr<ofxBox2dCircle>(new ofxBox2dCircle);
             
-            b2FixtureDef circleFixture = circle.get()->fixture;
-            circleFixture.filter.groupIndex = -8;
-            circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
-            circleFixture.filter.maskBits = CATEGORY_TRACKING;
-    
+            //            b2FixtureDef circleFixture = circle.get()->fixture;
+            //            circleFixture.filter.groupIndex = -8;
+            //            circleFixture.filter.categoryBits = CATEGORY_PARTICLES;
+            //            circleFixture.filter.maskBits = CATEGORY_TRACKING;
+            
             circle.get()->setPhysics(3.0, 0.53, 0.1);
             circle.get()->setup(box2d.getWorld(), ofRandom(ofGetWidth()), -ofRandom(r, 50), r);
             
@@ -144,7 +142,7 @@ void ofApp::update() {
         // THIS IS DIRTY
         // WE NEED TO DI THIS THE RIGHT WAY
         // @Todo
-//        grayImage.resize(1920, 1080);
+        //        grayImage.resize(1920, 1080);
         
         // Threshold image
         threshold(grayImage, grayThreshNear, nearThreshold, true);
@@ -161,20 +159,20 @@ void ofApp::update() {
         // Save pre-processed image for drawing it
         grayPreprocImage = grayImage;
 		// Process image
-
+        
         grayImage.mirror(false, true);
         dilate(grayImage);
         dilate(grayImage);
         blur(grayImage, 5);
-
+        
         
         // Mark image as changed
         grayImage.update();
         
         // Find contours
         //contourFinder.setThreshold(ofMap(mouseX, 0, ofGetWidth(), 0, 255));
-//        grayImageScaled = grayImage;
-//        grayImageScaled.resize(1920, 1080);
+        //        grayImageScaled = grayImage;
+        //        grayImageScaled.resize(1920, 1080);
         contourFinder.findContours(grayImage);
         
         
@@ -188,22 +186,22 @@ void ofApp::update() {
                 edgeLine.destroy();
             }
             
-//            ofPushMatrix();
+            //            ofPushMatrix();
             ofPolyline biggestPolyline = contourFinder.getPolyline(0); // The biggest one
             
             // TO DO: Scale here to fit screen!
-//           ofScale(ofGetWidth()/ 640, ofGetHeight()/480, 1); // 640x480 -> 400x300 = 0.625
+            //           ofScale(ofGetWidth()/ 640, ofGetHeight()/480, 1); // 640x480 -> 400x300 = 0.625
             
-
-                for(int i=0;i< (int)biggestPolyline.size();i++){
-                    biggestPolyline[i].x*= (ofGetWidth()/ 640);
-                    biggestPolyline[i].y*= (ofGetHeight()/360);
-//                    drawing.addVertex(biggestPolyline[i]);
-                }
-
+            
+            for(int i=0;i< (int)biggestPolyline.size();i++){
+                biggestPolyline[i].x*= (ofGetWidth()/ 640);
+                biggestPolyline[i].y*= (ofGetHeight()/360);
+                //                    drawing.addVertex(biggestPolyline[i]);
+            }
+            
             
             drawing.addVertices(biggestPolyline.getVertices());
-//            ofPopMatrix();
+            //            ofPopMatrix();
             drawing.setClosed(false);
             drawing.simplify();
             
@@ -253,9 +251,9 @@ void ofApp::draw() {
 	for(int i=0; i<circles.size(); i++) {
 		ofFill();
         ofSetColor(style.getForgroundColor());
-//		ofSetHexColor(0x90d4e3);
+        //		ofSetHexColor(0x90d4e3);
         ofxBox2dCircle *circ = circles[i].get();
-
+        
         
         if(!circ->isBody()) return;
         
@@ -264,22 +262,22 @@ void ofApp::draw() {
         ofRotate(circ->getRotation(), 0, 0, 1);
         ofCircle(0, 0, circ->getRadius());
         
-//        ofPushStyle();
-//        ofEnableAlphaBlending();
-//        ofSetColor(0);
-//        ofLine(0, 0, radius, 0);
-//        if(circ->isSleeping()) {
-//            ofSetColor(255, 100);
-//            ofCircle(0, 0, radius);
-//        }
-//        ofPopStyle();
+        //        ofPushStyle();
+        //        ofEnableAlphaBlending();
+        //        ofSetColor(0);
+        //        ofLine(0, 0, radius, 0);
+        //        if(circ->isSleeping()) {
+        //            ofSetColor(255, 100);
+        //            ofCircle(0, 0, radius);
+        //        }
+        //        ofPopStyle();
         ofPopMatrix();
 	}
 	
 	for(int i=0; i<boxes.size(); i++) {
 		ofFill();
         ofSetColor(style.getForgroundColor()) ;
-//		ofSetHexColor(0xe63b8b);
+        //		ofSetHexColor(0xe63b8b);
 		boxes[i].get()->draw();
         
 	}
@@ -311,14 +309,14 @@ void ofApp::draw() {
     
     // MAKE THE LOGO BIGGER !!!!!!!!!!!
     
- ofImage img = style.getLogo();
- ofSetColor(255,255,255,200);
- float w = img.getWidth();
- float h = img.getHeight();
- img.resize(w/5, h/5);
- ofEnableAlphaBlending();
- img.draw(25,ofGetHeight() - (img.getHeight() + 25));
- ofDisableAlphaBlending();
+    ofImage img = style.getLogo();
+    ofSetColor(255,255,255,200);
+    float w = img.getWidth();
+    float h = img.getHeight();
+    img.resize(w/5, h/5);
+    ofEnableAlphaBlending();
+    img.draw(25,ofGetHeight() - (img.getHeight() + 25));
+    ofDisableAlphaBlending();
 }
 
 //--------------------------------------------------------------
@@ -379,32 +377,32 @@ void ofApp::mouseMoved(int x, int y ) {
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
-//	drawing.addVertex(x, y);
+    //	drawing.addVertex(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
 	
-//	if(edgeLine.isBody()) {
-//		drawing.clear();
-//		edgeLine.destroy();
-//	}
-//	
-//	drawing.addVertex(x, y);
+    //	if(edgeLine.isBody()) {
+    //		drawing.clear();
+    //		edgeLine.destroy();
+    //	}
+    //
+    //	drawing.addVertex(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
 	
-//	drawing.setClosed(false);
-//	drawing.simplify();
-//	
-//	edgeLine.addVertexes(drawing);
-//	//polyLine.simplifyToMaxVerts(); // this is based on the max box2d verts
-//	edgeLine.setPhysics(0.0, 0.5, 0.5);
-//	edgeLine.create(box2d.getWorld());
-//    
-//	drawing.clear();
+    //	drawing.setClosed(false);
+    //	drawing.simplify();
+    //
+    //	edgeLine.addVertexes(drawing);
+    //	//polyLine.simplifyToMaxVerts(); // this is based on the max box2d verts
+    //	edgeLine.setPhysics(0.0, 0.5, 0.5);
+    //	edgeLine.create(box2d.getWorld());
+    //    
+    //	drawing.clear();
     
 }
 

@@ -3,6 +3,7 @@
 #include "ofxKinect.h"
 #include "ofxCv.h"
 #include "ofxBox2d.h"
+#include "CustomContactListener.h"
 #include "Styling.h"
 
 #define CATEGORY_TRACKING   0xFFFF;
