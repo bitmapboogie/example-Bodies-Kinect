@@ -54,6 +54,8 @@ public:
     ofImage grayThreshNear;    // the near thresholded image
 	ofImage grayThreshFar;     // the far thresholded image
     ofImage grayPreprocImage;  // grayscale pre-processed image
+    // @ToDo : Scale polyline not image
+    ofImage grayImageScaled; // for getting the ize of our screen
 	
     int nearThreshold;
 	int farThreshold;

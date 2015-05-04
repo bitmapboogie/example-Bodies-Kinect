@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>45552ECE-13E4-4E4D-BD84-26287C16F6C5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>example-Bodies-Kinect</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1A44994B-98D8-4879-BAFB-2B3386B37D63</key>
+		<string>ssh://github.com/bitmapboogie/ofxBox2d.git</string>
+		<key>4F4B033D-7339-491E-9509-15782777D118</key>
+		<string>ssh://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
+		<key>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</key>
+		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>example-Bodies-Kinect.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1A44994B-98D8-4879-BAFB-2B3386B37D63</key>
+		<string>../../../../../addons/ofxBox2d</string>
+		<key>4F4B033D-7339-491E-9509-15782777D118</key>
+		<string>../..</string>
+		<key>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</key>
+		<string>../../../../../addons/ofxCv</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/bitmapboogie/example-Bodies-Kinect.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4F4B033D-7339-491E-9509-15782777D118</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4F4B033D-7339-491E-9509-15782777D118</string>
+			<key>IDESourceControlWCCName</key>
+			<string>example-Bodies-Kinect</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1A44994B-98D8-4879-BAFB-2B3386B37D63</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxBox2d</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AE73F6DA-BCF0-4B76-87CE-8D6F69E2B546</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCv</string>
+		</dict>
+	</array>
+</dict>
+</plist>
